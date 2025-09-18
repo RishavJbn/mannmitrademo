@@ -13,22 +13,40 @@ import {z} from 'genkit';
 
 const AIChatbotSupportInputSchema = z.object({
   message: z.string().describe('The user message to the chatbot.'),
-  history: z.array(z.object({
-    role: z.enum(['user', 'bot']),
-    content: z.string(),
-  })).optional().describe('The conversation history between the user and the bot.'),
+  history: z
+    .array(
+      z.object({
+        role: z.enum(['user', 'bot']),
+        content: z.string(),
+      })
+    )
+    .optional()
+    .describe('The conversation history between the user and the bot.'),
 });
 export type AIChatbotSupportInput = z.infer<typeof AIChatbotSupportInputSchema>;
 
 const AIChatbotSupportOutputSchema = z.object({
   response: z.string().describe('The chatbot response to the user message.'),
-  redirect: z.string().optional().describe('URL to redirect to if trigger words are detected'),
+  redirect: z
+    .string()
+    .optional()
+    .describe('URL to redirect to if trigger words are detected'),
 });
-export type AIChatbotSupportOutput = z.infer<typeof AIChatbotSupportOutputSchema>;
+export type AIChatbotSupportOutput = z.infer<
+  typeof AIChatbotSupportOutputSchema
+>;
 
-const triggerWords = ['suicide', 'self-harm', 'crisis', 'kill myself', 'end my life'];
+const triggerWords = [
+  'suicide',
+  'self-harm',
+  'crisis',
+  'kill myself',
+  'end my life',
+];
 
-export async function aiChatbotSupport(input: AIChatbotSupportInput): Promise<AIChatbotSupportOutput> {
+export async function aiChatbotSupport(
+  input: AIChatbotSupportInput
+): Promise<AIChatbotSupportOutput> {
   return aiChatbotSupportFlow(input);
 }
 
@@ -48,8 +66,7 @@ const aiChatbotSupportPrompt = ai.definePrompt({
 
   Here's the previous conversation history:
   {{#each history}}
-  {{#ifEquals role "user"}}User: {{content}}{{/ifEquals}}
-  {{#ifEquals role "bot"}}Bot: {{content}}{{/ifEquals}}
+  {{role}}: {{content}}
   {{/each}}
 
   User: {{{message}}}
@@ -76,12 +93,8 @@ const aiChatbotSupportPrompt = ai.definePrompt({
   },
 });
 
-ai.Handlebars.registerHelper('ifEquals', function(arg1, arg2, options) {
-  // @ts-expect-error
-  return (arg1 == arg2) ? options.fn(this) : options.inverse(this);
-});
-
-const aiChatbotSupportFlow = ai.defineFlow({
+const aiChatbotSupportFlow = ai.defineFlow(
+  {
     name: 'aiChatbotSupportFlow',
     inputSchema: AIChatbotSupportInputSchema,
     outputSchema: AIChatbotSupportOutputSchema,
@@ -89,7 +102,9 @@ const aiChatbotSupportFlow = ai.defineFlow({
   async input => {
     // Check for trigger words in the input message
     const lowerCaseMessage = input.message.toLowerCase();
-    const shouldRedirect = triggerWords.some(word => lowerCaseMessage.includes(word));
+    const shouldRedirect = triggerWords.some(word =>
+      lowerCaseMessage.includes(word)
+    );
 
     const {output} = await aiChatbotSupportPrompt({
       ...input,
@@ -100,4 +115,5 @@ const aiChatbotSupportFlow = ai.defineFlow({
       ...output,
       redirect: shouldRedirect ? '/helpline' : output?.redirect,
     };
-  });
+  }
+);
