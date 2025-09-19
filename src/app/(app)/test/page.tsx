@@ -2,11 +2,11 @@
 
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
-import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
-import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
-import { Label } from '@/components/ui/label';
-import { Button } from '@/components/ui/button';
-import { Progress } from '@/components/ui/progress';
+import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '../../../components/ui/card';
+import { RadioGroup, RadioGroupItem } from '../../../components/ui/radio-group';
+import { Label } from '../../../components/ui/label';
+import { Button } from '../../../components/ui/button';
+import { Progress } from '../../../components/ui/progress';
 
 const questions = [
   "Little interest or pleasure in doing things",

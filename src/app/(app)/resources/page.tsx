@@ -1,4 +1,4 @@
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Card, CardContent, CardHeader, CardTitle } from "../../../components/ui/card";
 import { BookOpen, Mic, Video, Wind } from "lucide-react";
 import Image from "next/image";
 import Link from 'next/link';

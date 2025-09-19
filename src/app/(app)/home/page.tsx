@@ -1,8 +1,8 @@
 "use client";
 
 import { useAuth } from '@/contexts/AuthContext';
-import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
-import { Button } from '@/components/ui/button';
+import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '../../../components/ui/card';
+import { Button } from '../../../components/ui/button';
 import { ArrowRight, MessageSquare, ClipboardCheck } from 'lucide-react';
 import Link from 'next/link';
 import Image from 'next/image';

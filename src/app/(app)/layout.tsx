@@ -3,8 +3,8 @@
 import { useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { useAuth } from '@/contexts/AuthContext';
-import { BottomNavBar } from '@/components/BottomNavBar';
-import { Spinner } from '@/components/ui/spinner';
+import { BottomNavBar } from '../../components/BottomNavBar';
+import { Spinner } from '../../components/ui/spinner';
 
 export default function AppLayout({ children }: { children: React.ReactNode }) {
   const { user, loading } = useAuth();

@@ -2,14 +2,14 @@
 
 import { useState, useRef, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
-import { Avatar, AvatarFallback } from '@/components/ui/avatar';
-import { Button } from '@/components/ui/button';
-import { Textarea } from '@/components/ui/textarea';
-import { ScrollArea } from '@/components/ui/scroll-area';
+import { Avatar, AvatarFallback } from '../../../components/ui/avatar';
+import { Button } from '../../../components/ui/button';
+import { Textarea } from '../../../components/ui/textarea';
+import { ScrollArea } from '../../../components/ui/scroll-area';
 import { Send, User, Bot } from 'lucide-react';
 import { aiChatbotSupport } from '@/ai/flows/ai-chatbot-support';
 import { cn } from '@/lib/utils';
-import { Spinner } from '@/components/ui/spinner';
+import { Spinner } from '../../../components/ui/spinner';
 
 type Message = {
   role: 'user' | 'bot';
@@ -70,7 +70,7 @@ export default function ChatbotPage() {
         <p className="text-muted-foreground">A safe space to share and reflect.</p>
       </div>
 
-      <Card className="flex-grow flex flex-col shadow-lg">
+      <Card className="flex-grow flex flex-col shadow-lg" style={{backgroundImage: 'url(/chat-bg-big.png)'}}>
         <CardContent className="flex-grow p-0">
           <ScrollArea className="h-[calc(100vh-16rem)] md:h-[calc(100vh-12rem)] p-4" ref={scrollAreaRef}>
             <div className="space-y-6">
@@ -89,14 +89,14 @@ export default function ChatbotPage() {
                   <div className={cn(
                     'max-w-xs md:max-w-md p-3 rounded-2xl text-sm md:text-base',
                     message.role === 'user'
-                      ? 'bg-primary text-primary-foreground rounded-br-none'
-                      : 'bg-muted rounded-bl-none'
+                      ? 'bg-[#FFD3AC] text-[#2C3E50] rounded-br-none'
+                      : 'bg-[#F4EBA9] text-[#2C3E50] rounded-bl-none'
                   )}>
                     {message.content}
                   </div>
                   {message.role === 'user' && (
                     <Avatar className="h-8 w-8">
-                      <AvatarFallback>
+                      <AvatarFallback className='bg-[#ED766E]'>
                         <User className="h-5 w-5" />
                       </AvatarFallback>
                     </Avatar>
@@ -124,7 +124,7 @@ export default function ChatbotPage() {
               value={input}
               onChange={(e) => setInput(e.target.value)}
               placeholder="Type your message..."
-              className="min-h-0 flex-1 resize-none"
+              className="min-h-0 flex-1 resize-none rounded-full"
               rows={1}
               onKeyDown={(e) => {
                 if (e.key === 'Enter' && !e.shiftKey) {
@@ -134,7 +134,7 @@ export default function ChatbotPage() {
               }}
               disabled={isLoading}
             />
-            <Button type="submit" size="icon" disabled={isLoading || !input.trim()}>
+            <Button type="submit" className='rounded-full' size="icon" disabled={isLoading || !input.trim()}>
               <Send className="h-4 w-4" />
               <span className="sr-only">Send</span>
             </Button>
@@ -146,4 +146,4 @@ export default function ChatbotPage() {
 }
 
 // Re-using existing Card components from shadcn
-import { Card, CardContent, CardFooter } from "@/components/ui/card";
+import { Card, CardContent, CardFooter } from "../../../components/ui/card";
